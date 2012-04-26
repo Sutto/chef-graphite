@@ -21,6 +21,14 @@
                 SetEnv DJANGO_SETTINGS_MODULE graphite.settings
                 PythonDebug Off
                 PythonAutoReload Off
+                <% if node[:graphite][:graphite_web][:auth_file] -%>
+                AuthType basic
+                AuthUserFile <%= node[:graphite][:graphite_web][:auth_file] %>
+                Require valid-user
+                AllowOverride None
+                Order allow,deny
+                Allow from all
+                <% end -%>
         </Location>
 
         <Location "/content/">
